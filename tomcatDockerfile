@@ -10,23 +10,23 @@ RUN service mysql start
 RUN mkdir /home/tomcat
 WORKDIR /home/tomcat
 
-RUN wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.76/bin/apache-tomcat-9.0.76.tar.gz
-RUN tar xvfz apache-tomcat-9.0.76.tar.gz
-RUN rm apache-tomcat-9.0.76.tar.gz
+RUN wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.89/bin/apache-tomcat-9.0.89.tar.gz
+RUN tar xvfz apache-tomcat-9.0.89.tar.gz
+RUN rm apache-tomcat-9.0.89.tar.gz
 
 RUN chmod -R 777 /etc/profile
-RUN echo 'export CATALINA_HOME=/home/tomcat/apache-tomcat-9.0.76' >> /etc/profile
+RUN echo 'export CATALINA_HOME=/home/tomcat/apache-tomcat-9.0.89' >> /etc/profile
 
-ENV CATALINA_HOME /home/tomcat/apache-tomcat-9.0.76
+ENV CATALINA_HOME /home/tomcat/apache-tomcat-9.0.89
 
-RUN cd /home/tomcat/apache-tomcat-9.0.76/lib && wget https://downloads.mariadb.com/Connectors/java/connector-java-2.7.4/mariadb-java-client-2.7.4.jar
+RUN cd /home/tomcat/apache-tomcat-9.0.89/lib && wget https://downloads.mariadb.com/Connectors/java/connector-java-2.7.4/mariadb-java-client-2.7.4.jar
 
-COPY index.jsp /home/tomcat/apache-tomcat-9.0.76/webapps/ROOT/
-COPY context.xml /home/tomcat/apache-tomcat-9.0.76/conf/
+COPY index.jsp /home/tomcat/apache-tomcat-9.0.89/webapps/ROOT/
+COPY context.xml /home/tomcat/apache-tomcat-9.0.89/conf/
 
 
-RUN /home/tomcat/apache-tomcat-9.0.76/bin/shutdown.sh && /home/tomcat/apache-tomcat-9.0.76/bin/startup.sh
+RUN /home/tomcat/apache-tomcat-9.0.89/bin/shutdown.sh && /home/tomcat/apache-tomcat-9.0.89/bin/startup.sh
 
 EXPOSE 8080
 
-CMD ["/home/tomcat/apache-tomcat-9.0.76/bin/catalina.sh", "run"]
+CMD ["/home/tomcat/apache-tomcat-9.0.89/bin/catalina.sh", "run"]
