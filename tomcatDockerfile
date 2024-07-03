@@ -1,32 +1,44 @@
-#tomcat
+# Ubuntu 20.04를 베이스 이미지로 사용
 FROM ubuntu:20.04
 
+# OpenJDK 17과 wget 설치
 RUN apt-get update && apt-get -y install openjdk-17-jre-headless wget
 
-RUN apt-get update && apt-get install -y mariadb-server
+# MySQL 서버 설치
+RUN apt-get update && apt-get install -y mysql-server
 
+# MySQL 서비스 시작
 RUN service mysql start
 
+# Tomcat용 디렉토리 생성 및 작업 디렉토리 설정
 RUN mkdir /home/tomcat
 WORKDIR /home/tomcat
 
-RUN wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.89/bin/apache-tomcat-9.0.89.tar.gz
-RUN tar xvfz apache-tomcat-9.0.89.tar.gz
-RUN rm apache-tomcat-9.0.89.tar.gz
+# Tomcat 다운로드 및 압축 해제
+RUN wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.76/bin/apache-tomcat-9.0.76.tar.gz
+RUN tar xvfz apache-tomcat-9.0.76.tar.gz
+RUN rm apache-tomcat-9.0.76.tar.gz
 
-RUN chmod -R 777 /etc/profile
-RUN echo 'export CATALINA_HOME=/home/tomcat/apache-tomcat-9.0.89' >> /etc/profile
+# CATALINA_HOME 환경 변수 설정
+ENV CATALINA_HOME /home/tomcat/apache-tomcat-9.0.76
 
-ENV CATALINA_HOME /home/tomcat/apache-tomcat-9.0.89
+# catalina.sh를 실행 가능하도록 설정
+RUN chmod +x $CATALINA_HOME/bin/catalina.sh
 
-RUN cd /home/tomcat/apache-tomcat-9.0.89/lib && wget https://downloads.mariadb.com/Connectors/java/connector-java-2.7.4/mariadb-java-client-2.7.4.jar
+# MySQL JDBC 드라이버 다운로드
+RUN cd $CATALINA_HOME/lib && wget https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.29/mysql-connector-java-8.0.29.jar
 
-COPY index.jsp /home/tomcat/apache-tomcat-9.0.89/webapps/ROOT/
-COPY context.xml /home/tomcat/apache-tomcat-9.0.89/conf/
+# JSP 파일과 context.xml을 적절한 위치에 복사
+COPY index.jsp $CATALINA_HOME/webapps/ROOT/
+COPY index_reverse.jsp $CATALINA_HOME/webapps/ROOT/
+COPY context.xml $CATALINA_HOME/conf/
 
+# Tomcat 서비스 중지 및 재시작
+RUN /home/tomcat/apache-tomcat-9.0.76/bin/shutdown.sh && /home/tomcat/apache-tomcat-9.0.76/bin/startup.sh
 
-RUN /home/tomcat/apache-tomcat-9.0.89/bin/shutdown.sh && /home/tomcat/apache-tomcat-9.0.89/bin/startup.sh
-
+# 포트 8080 노출
 EXPOSE 8080
 
-CMD ["/home/tomcat/apache-tomcat-9.0.89/bin/catalina.sh", "run"]
+# Tomcat 시작
+CMD ["sh", "-c", "$CATALINA_HOME/bin/catalina.sh run"]
+
