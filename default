@@ -20,6 +20,7 @@
 #
 upstream express-server {
         server reca3team-was-server:8080;
+        server jenkins-service:8080;
         }
 
 
