@@ -16,14 +16,24 @@
  -->
 <!--  The contents of this file will be loaded for each web application  -->
 <Context>
-<Resource name="jdbc/MasterpieceDB" auth="Container" type="javax.sql.DataSource" maxTotal="100" maxIdle="30" maxWaitMillis="10000" username="admin" password="Reca3team" driverClassName="org.mariadb.jdbc.Driver" url="jdbc:mariadb://reca3team-prd-mariadb.c1eiqtt31v98.ap-northeast-2.rds.amazonaws.com:3306/MasterpieceDB"/>
-<!--  Default set of monitored resources. If one of these changes, the     -->
-<!--  web application will be reloaded.                                    -->
-<WatchedResource>WEB-INF/web.xml</WatchedResource>
-<WatchedResource>WEB-INF/tomcat-web.xml</WatchedResource>
-<WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
-<!--  Uncomment this to disable session persistence across Tomcat restarts  -->
-<!-- 
+    <Resource name="solmysql_1"
+              auth="Container"
+              type="javax.sql.DataSource"
+              maxTotal="100"
+              maxIdle="30"
+              maxWaitMillis="10000"
+              username="admin"
+              password="soldesk1!"
+              driverClassName="com.mysql.cj.jdbc.Driver"
+              url="jdbc:mysql://sol-rds.c9qa2ga0iatl.ap-northeast-2.rds.amazonaws.com:3306/solmysql_1?useSSL=false&amp;serverTimezone=UTC"/>
+    
+    <!-- Default set of monitored resources. If one of these changes, the web application will be reloaded. -->
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+    <WatchedResource>WEB-INF/tomcat-web.xml</WatchedResource>
+    <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
+    
+    <!-- Uncomment this to disable session persistence across Tomcat restarts -->
+    <!-- 
     <Manager pathname="" />
-     -->
+    -->
 </Context>
