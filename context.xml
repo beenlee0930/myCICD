@@ -16,6 +16,7 @@
  -->
 <!--  The contents of this file will be loaded for each web application  -->
 <Context>
+    <!-- solmysql_1 데이터베이스 리소스 설정 -->
     <Resource name="solmysql_1"
               auth="Container"
               type="javax.sql.DataSource"
@@ -27,7 +28,7 @@
               driverClassName="com.mysql.cj.jdbc.Driver"
               url="jdbc:mysql://sol-rds.c9qa2ga0iatl.ap-northeast-2.rds.amazonaws.com:3306/solmysql_1?useSSL=false&amp;serverTimezone=UTC"/>
     
-    <!-- Default set of monitored resources. If one of these changes, the web application will be reloaded. -->
+    <!-- 변경 시 웹 애플리케이션이 다시 로드되는 기본 모니터링 리소스 설정 -->
     <WatchedResource>WEB-INF/web.xml</WatchedResource>
     <WatchedResource>WEB-INF/tomcat-web.xml</WatchedResource>
     <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
