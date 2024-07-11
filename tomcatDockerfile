@@ -30,15 +30,10 @@ RUN cd $CATALINA_HOME/lib && wget https://repo1.maven.org/maven2/mysql/mysql-con
 
 # JSP 파일과 context.xml을 적절한 위치에 복사
 COPY index.jsp $CATALINA_HOME/webapps/ROOT/
-COPY index_reverse.jsp $CATALINA_HOME/webapps/ROOT/
 COPY context.xml $CATALINA_HOME/conf/
-
-# Tomcat 서비스 중지 및 재시작
-RUN /home/tomcat/apache-tomcat-9.0.76/bin/shutdown.sh && /home/tomcat/apache-tomcat-9.0.76/bin/startup.sh
 
 # 포트 8080 노출
 EXPOSE 8080
 
 # Tomcat 시작
-CMD ["sh", "-c", "$CATALINA_HOME/bin/catalina.sh run"]
-
+CMD ["/home/tomcat/apache-tomcat-9.0.76/bin/catalina.sh", "run"]
