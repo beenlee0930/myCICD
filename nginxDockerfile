@@ -1,13 +1,18 @@
-#nginx
-
+# Ubuntu 20.04를 기반 이미지로 사용
 FROM ubuntu:20.04
 
+# 패키지 목록을 업데이트하고 Nginx 설치
 RUN apt-get update && apt-get install -y nginx
+
+# 시스템 시간대를 서울로 변경
 RUN mv /etc/localtime /etc/localtime_org \
        && ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
+# Nginx 설정 파일을 이미지에 복사
 COPY default /etc/nginx/sites-available/
 
+# 포트 80을 외부에 노출
 EXPOSE 80
 
+# Nginx를 포그라운드에서 실행
 CMD ["nginx", "-g", "daemon off;"]
